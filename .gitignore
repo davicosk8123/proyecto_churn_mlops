@@ -1,0 +1,26 @@
+# Python cache files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+
+# IDE files
+.vscode/
+.idea/
+
+# Local generated data files
+data/churn_clientes.csv
+data/train.csv
+data/test.csv
+
+# Local trained models
+models/modelo_churn.pkl
+
+# Notebook checkpoints
+.ipynb_checkpoints/
+*/.ipynb_checkpoints/
