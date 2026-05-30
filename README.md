@@ -52,3 +52,48 @@ El flujo básico será:
 4. Guardar las métricas.
 5. Crear una API básica.
 6. Probar el funcionamiento inicial.
+
+---
+
+## DOCUMENTACIÓN DE LA API (Mejora Técnica del Experimento)
+
+La API está desarrollada utilizando **FastAPI** y expone los siguientes endpoints técnicos para consumo e inferencia del modelo:
+
+### 1. Endpoint Raíz (`GET /`)
+Retorna el mensaje de estado de la API.
+- **Respuesta:**
+  ```json
+  {
+    "mensaje": "API de predicción de churn activa"
+  }
+  ```
+
+### 2. Endpoint de Estado de Salud (`GET /health`)
+Verifica si la API está en línea y si el archivo binario del modelo de Machine Learning (`modelo_churn.pkl`) está cargado y disponible.
+- **Respuesta:**
+  ```json
+  {
+    "estado": "ok",
+    "modelo_disponible": true
+  }
+  ```
+
+### 3. Endpoint de Inferencia (`POST /predict`)
+Recibe los datos socio-demográficos y transaccionales del cliente y retorna la clasificación probabilística del Churn.
+- **Cuerpo de la Petición (Request Body):**
+  ```json
+  {
+    "edad": 28,
+    "antiguedad_meses": 8,
+    "saldo_promedio": 1200,
+    "reclamos": 3,
+    "usa_app": 0
+  }
+  ```
+- **Cuerpo de la Respuesta (Response Body):**
+  ```json
+  {
+    "churn_predicho": 1,
+    "probabilidad_churn": 0.95
+  }
+  ```
