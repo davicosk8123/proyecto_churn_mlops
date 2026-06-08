@@ -2,7 +2,7 @@ from pathlib import Path
 
 import joblib
 import pandas as pd
-from sklearn.linear_model import LogisticRegression
+from sklearn.tree import DecisionTreeClassifier
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import StandardScaler
 
@@ -15,7 +15,7 @@ MODEL_FILE = MODELS_DIR / "modelo_churn.pkl"
 
 def entrenar_modelo():
     """
-    Entrena un modelo simple de clasificación para predecir churn.
+    Entrena un modelo de árbol de decisión para predecir churn (Experimento).
     """
 
     if not TRAIN_DATA.exists():
@@ -30,10 +30,11 @@ def entrenar_modelo():
     X = df.drop(columns=["churn"])
     y = df["churn"]
 
+    # EXPERIMENTO: Usar DecisionTreeClassifier con max_depth controlado
     modelo = Pipeline(
         steps=[
             ("escalado", StandardScaler()),
-            ("clasificador", LogisticRegression())
+            ("clasificador", DecisionTreeClassifier(max_depth=3, random_state=42))
         ]
     )
 
@@ -41,7 +42,7 @@ def entrenar_modelo():
 
     joblib.dump(modelo, MODEL_FILE)
 
-    print("Modelo entrenado correctamente.")
+    print("Modelo entrenado correctamente (Árbol de Decisión - Experimento).")
     print(f"Modelo guardado en: {MODEL_FILE}")
 
 if __name__ == "__main__":
