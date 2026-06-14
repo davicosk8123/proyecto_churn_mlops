@@ -59,20 +59,21 @@ docker run --rm -v %cd%:/app proyecto-churn-mlops pytest
 
 ## 3. Levantar la API en Docker
 
-Para iniciar el servidor web de FastAPI en el contenedor y poder consumirlo desde tu máquina en el puerto 8000:
+Para iniciar el servidor web de FastAPI en el contenedor y poder consumirlo desde tu máquina en el puerto 8001:
 
 ### En PowerShell:
 ```powershell
-docker run -it --rm -p 8000:8000 -v ${PWD}:/app proyecto-churn-mlops
+docker run -it --rm -p 8001:8000 -v ${PWD}:/app proyecto-churn-mlops
 ```
 
 ### En CMD:
 ```cmd
-docker run -it --rm -p 8000:8000 -v %cd%:/app proyecto-churn-mlops
+docker run -it --rm -p 8001:8000 -v %cd%:/app proyecto-churn-mlops
 ```
 
 ### Probar la API
 Con el contenedor corriendo:
-1. Abre [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs) en tu navegador para ver la documentación interactiva de Swagger UI.
+1. Abre [http://127.0.0.1:8001/docs](http://127.0.0.1:8001/docs) en tu navegador para ver la documentación interactiva de Swagger UI.
 2. Despliega `POST /predict`, haz clic en **"Try it out"**, pega el JSON de prueba y presiona **"Execute"**.
 3. Para apagar la API, presiona `Ctrl + C` en la terminal del contenedor.
+

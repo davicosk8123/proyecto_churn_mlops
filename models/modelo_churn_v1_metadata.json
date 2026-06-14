@@ -3,7 +3,7 @@
     "version": "1.0.0",
     "algoritmo": "DecisionTreeClassifier (max_depth=3)",
     "autor": "Nimer David Guzmán Zapata",
-    "fecha_entrenamiento": "2026-06-14T00:36:00.111900",
+    "fecha_entrenamiento": "2026-06-14T00:43:08.654225",
     "variables_utilizadas": [
         "edad",
         "antiguedad_meses",
