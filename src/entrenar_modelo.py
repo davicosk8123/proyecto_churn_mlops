@@ -1,4 +1,6 @@
 from pathlib import Path
+import json
+from datetime import datetime
 
 import joblib
 import pandas as pd
@@ -11,7 +13,7 @@ DATA_DIR = BASE_DIR / "data"
 MODELS_DIR = BASE_DIR / "models"
 
 TRAIN_DATA = DATA_DIR / "train.csv"
-MODEL_FILE = MODELS_DIR / "modelo_churn.pkl"
+MODEL_FILE = MODELS_DIR / "modelo_churn_v1.joblib"
 
 def entrenar_modelo():
     """
@@ -42,8 +44,24 @@ def entrenar_modelo():
 
     joblib.dump(modelo, MODEL_FILE)
 
+    # Guardar metadatos del modelo
+    metadata_file = MODELS_DIR / "modelo_churn_v1_metadata.json"
+    metadata = {
+        "nombre_modelo": "Modelo de Predicción de Churn de Clientes",
+        "version": "1.0.0",
+        "algoritmo": "DecisionTreeClassifier (max_depth=3)",
+        "autor": "Nimer David Guzmán Zapata",
+        "fecha_entrenamiento": datetime.now().isoformat(),
+        "variables_utilizadas": list(X.columns)
+    }
+    
+    with open(metadata_file, "w", encoding="utf-8") as f:
+        json.dump(metadata, f, indent=4, ensure_ascii=False)
+
     print("Modelo entrenado correctamente (Árbol de Decisión - Experimento).")
     print(f"Modelo guardado en: {MODEL_FILE}")
+    print(f"Metadatos guardados en: {metadata_file}")
 
 if __name__ == "__main__":
     entrenar_modelo()
+

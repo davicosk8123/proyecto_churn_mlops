@@ -1,4 +1,5 @@
 from pathlib import Path
+import json
 
 import joblib
 import pandas as pd
@@ -10,7 +11,7 @@ MODELS_DIR = BASE_DIR / "models"
 DOCS_DIR = BASE_DIR / "docs"
 
 TEST_DATA = DATA_DIR / "test.csv"
-MODEL_FILE = MODELS_DIR / "modelo_churn.pkl"
+MODEL_FILE = MODELS_DIR / "modelo_churn_v1.joblib"
 METRICS_FILE = DOCS_DIR / "metricas_modelo.md"
 
 def evaluar_modelo():
@@ -73,8 +74,27 @@ Este documento registra y compara el desempeño de las distintas versiones del m
 
     METRICS_FILE.write_text(contenido, encoding="utf-8")
 
+    # Actualizar metadatos con las métricas obtenidas
+    metadata_file = MODELS_DIR / "modelo_churn_v1_metadata.json"
+    if metadata_file.exists():
+        with open(metadata_file, "r", encoding="utf-8") as f:
+            metadata = json.load(f)
+        
+        metadata["metricas_evaluacion"] = {
+            "accuracy": round(float(accuracy), 4),
+            "precision": round(float(precision), 4),
+            "recall": round(float(recall), 4),
+            "f1_score": round(float(f1), 4),
+            "roc_auc": round(float(roc_auc), 4)
+        }
+        
+        with open(metadata_file, "w", encoding="utf-8") as f:
+            json.dump(metadata, f, indent=4, ensure_ascii=False)
+        print(f"Métricas actualizadas en los metadatos: {metadata_file}")
+
     print("Modelo del experimento evaluado correctamente con métrica adicional ROC-AUC.")
     print(f"Métricas comparativas guardadas en: {METRICS_FILE}")
 
 if __name__ == "__main__":
     evaluar_modelo()
+

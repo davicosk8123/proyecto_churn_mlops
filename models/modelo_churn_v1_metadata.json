@@ -1,0 +1,21 @@
+{
+    "nombre_modelo": "Modelo de Predicción de Churn de Clientes",
+    "version": "1.0.0",
+    "algoritmo": "DecisionTreeClassifier (max_depth=3)",
+    "autor": "Nimer David Guzmán Zapata",
+    "fecha_entrenamiento": "2026-06-14T00:36:00.111900",
+    "variables_utilizadas": [
+        "edad",
+        "antiguedad_meses",
+        "saldo_promedio",
+        "reclamos",
+        "usa_app"
+    ],
+    "metricas_evaluacion": {
+        "accuracy": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1_score": 1.0,
+        "roc_auc": 1.0
+    }
+}
