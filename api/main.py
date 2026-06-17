@@ -1,9 +1,10 @@
 from pathlib import Path
 import json
+import time
 
 import joblib
 import pandas as pd
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Request
 from pydantic import BaseModel, Field
 
 BASE_DIR = Path(__file__).resolve().parents[1]
@@ -16,6 +17,15 @@ app = FastAPI(
     version="1.0.0",
     description="API avanzada para consumir un modelo de Machine Learning de predicción de churn."
 )
+
+@app.middleware("http")
+async def medir_tiempo_respuesta(request: Request, call_next):
+    inicio = time.time()
+    response = await call_next(request)
+    tiempo_transcurrido = (time.time() - inicio) * 1000  # en milisegundos
+    response.headers["X-Response-Time-Ms"] = f"{tiempo_transcurrido:.2f}"
+    print(f"[MONITOREO] Ruta: {request.url.path} | Tiempo de Respuesta: {tiempo_transcurrido:.2f} ms")
+    return response
 
 class Cliente(BaseModel):
     edad: int = Field(..., ge=18, le=100, description="Edad del cliente (debe estar entre 18 y 100 años)")
